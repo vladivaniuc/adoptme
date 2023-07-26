@@ -16,10 +16,6 @@ const SearhParams = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    console.log("This is breeds:", BREEDS);
-  }, [BREEDS]);
-
   const udpateLocation = (e) => {
     const newLocation = e.target.value;
     setLocation(newLocation);
@@ -105,8 +101,7 @@ const SearhParams = () => {
 
         <button>Submit</button>
       </form>
-            <Results pets={pets}/>
-      ;
+      <Results pets={pets} />;
     </div>
   );
 };
