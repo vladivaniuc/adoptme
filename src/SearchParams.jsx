@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
-import fetchSearch from "../fetchSearch";
+import fetchSearch from "./fetchSearch";
+
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -35,10 +36,7 @@ const SearchParams = () => {
       <form onSubmit={requestPetsData}>
         <label htmlFor="location">
           Location
-          <input 
-          name="location" 
-          id="location" 
-          placeholder="Location" />
+          <input name="location" id="location" placeholder="Location" />
         </label>
 
         <label htmlFor="animal">
