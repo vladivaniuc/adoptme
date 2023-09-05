@@ -1,10 +1,9 @@
-import { useState, useContext} from "react";
+import { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
 import fetchSearch from "./fetchSearch";
 import AdoptedPetContext from "./AdoptPetContext";
-
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -34,16 +33,25 @@ const SearchParams = () => {
   };
 
   return (
-    <div className="search-params">
-      <form onSubmit={requestPetsData}>
-        {adoptedPet? (
+    <div className="my-0 mx-auto w-11/12">
+      <form
+        className="mb-10 flex flex-col items-center justify-center rounded-lg bg-gray-200 p-10 shadow-lg"
+        onSubmit={requestPetsData}
+      >
+        {adoptedPet ? (
           <div className="pet image-container">
             <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
           </div>
-        ): null}
+        ) : null}
         <label htmlFor="location">
           Location
-          <input name="location" id="location" placeholder="Location" />
+          <input
+            type="text"
+            name="location"
+            id="location"
+            className="search-input"
+            placeholder="Location"
+          />
         </label>
 
         <label htmlFor="animal">
@@ -51,6 +59,7 @@ const SearchParams = () => {
           <select
             id="animal"
             name="animal"
+            className="search-input"
             onChange={(e) => {
               setAnimal(e.target.value);
             }}
@@ -69,7 +78,12 @@ const SearchParams = () => {
 
         <label htmlFor="breed">
           Breed
-          <select id="breed" name="breed" disabled={!BREEDS.length}>
+          <select
+            className="search-input grayed-out-disabled"
+            id="breed"
+            name="breed"
+            disabled={!BREEDS.length}
+          >
             <option />
             {BREEDS.map((breed) => (
               <option key={breed}>{breed}</option>
@@ -77,7 +91,9 @@ const SearchParams = () => {
           </select>
         </label>
 
-        <button>Submit</button>
+        <button className="color rounded border-none bg-orange-500 px-6 py-2 text-white hover:opacity-50">
+          Submit
+        </button>
       </form>
       <Results pets={pets} />;
     </div>

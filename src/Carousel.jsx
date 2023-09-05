@@ -16,7 +16,6 @@ export default class Carousel extends Component {
   };
 
   render() {
-    
     const { active } = this.state;
     const { images } = this.props;
 
