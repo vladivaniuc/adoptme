@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useTransition} from "react";
 import { useQuery } from "@tanstack/react-query";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
@@ -17,9 +17,12 @@ const SearchParams = () => {
   const [animal, setAnimal] = useState("");
   const [BREEDS] = useBreedList(animal);
   const [adoptedPet] = useContext(AdoptedPetContext);
+  const [isPending, startTransition] = useTransition();
 
   const results = useQuery(["search", requestParams], fetchSearch);
   const pets = results?.data?.pets ?? [];
+  /* const deferredPets = useDeferredValue(pets);
+  const renderedPets = useMemo(() => <Results pets={deferredPets}/>),[deferredPets]); */
 
   const requestPetsData = (e) => {
     e.preventDefault();
@@ -29,7 +32,9 @@ const SearchParams = () => {
       breed: formData.get("breed") ?? "",
       location: formData.get("location") ?? "",
     };
-    setRequestParams(obj);
+    startTransition(() => {
+      setRequestParams(obj);
+    });
   };
 
   return (
@@ -91,9 +96,20 @@ const SearchParams = () => {
           </select>
         </label>
 
-        <button className="color rounded border-none bg-orange-500 px-6 py-2 text-white hover:opacity-50">
+        {
+          isPending? (
+            <div className="mini loading-pane">
+              <h2 className="loader">:dog2:</h2>
+
+            </div>
+          ): (
+            <button className="color rounded border-none bg-orange-500 px-6 py-2 text-white hover:opacity-50">
           Submit
         </button>
+          )
+        }      
+
+
       </form>
       <Results pets={pets} />;
     </div>
